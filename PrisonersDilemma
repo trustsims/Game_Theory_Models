@@ -1,0 +1,50 @@
+#Prisoner's Dilemma - Homework Scenario
+#DO = Do homework, C = Copy
+
+def get_valid_input(player_name):
+    """Prompt player until a valid choice is entered."""
+    while True:
+        choice = input(f"{player_name}, enter your choice (DO or C): ").strip().upper()
+        if choice == "":
+            print("❌ Input cannot be empty. Try again.")
+        elif choice not in ["DO", "C"]:
+            print("❌ Invalid choice. Please enter 'DO' or 'C'.")
+        else:
+            return choice
+
+def calculate_payoff(p1, p2):
+    """Determine scores and explanation based on choices."""
+    if p1 == "DO" and p2 == "DO":
+        return (3, 3, "Both students did the homework. Overall class performance is good!")
+    elif p1 == "DO" and p2 == "C":
+        return (0, 5, "Player 2 copied and gained an unfair advantage over Player 1.")
+    elif p1 == "C" and p2 == "DO":
+        return (5, 0, "Player 1 copied and gained an unfair advantage over Player 2.")
+    else:  # both chose "C"
+        return (1, 1, "Both students copied. Overall class performance is poor.")
+
+def play_round():
+    """Run a single round of the game."""
+    print("\n--- New Round ---")
+    p1_choice = get_valid_input("Player 1")
+    p2_choice = get_valid_input("Player 2")
+    p1_score, p2_score, message = calculate_payoff(p1_choice, p2_choice)
+
+    print("\nResults:")
+    print(f"Player 1 chose: {p1_choice}")
+    print(f"Player 2 chose: {p2_choice}")
+    print(message)
+    print(f"Scores → Player 1: {p1_score}, Player 2: {p2_score}")
+
+def main():
+    """Main game loop."""
+    print("=== Prisoner's Dilemma: Homework Edition ===")
+    while True:
+        play_round()
+        again = input("\nPlay another round? (yes/no): ").strip().lower()
+        if again != "yes":
+            print("Thanks for playing!")
+            break
+
+# Run the program
+main()
